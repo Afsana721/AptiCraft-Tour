@@ -15,8 +15,7 @@ export default function Home() {
           zIndex: 0,
           opacity: 0.9,
         }}
-        allow="fullscreen"
-      />
+        allow="fullscreen" />
 
       
       <nav
@@ -71,30 +70,31 @@ export default function Home() {
 <section
         style={{
           position: "absolute",
-          top: "22%",
-          left: 24,
+          top: "15%",
+          left: 42,
           zIndex: 10,
           width: "380px",
           padding: "22px",
-          background: "rgba(215, 195, 255, 0.45)",
+          // background: "rgba(215, 195, 255, 0.45)",
           borderRadius: 18,
           fontFamily: "Inter, Segoe UI, system-ui, sans-serif",
-          color: "#2f1b4f",
+          color: "#13c9d6ff",
         }}
       >
-        <div style={{ marginBottom: 18, fontSize: 22, fontWeight: 500 }}>
+        <div style={{ marginBottom: 18, fontSize: 28, fontWeight: 400 }}>
           Software Development
         </div>
 
-        <div style={{ marginBottom: 16, fontSize: 17, lineHeight: 1.5 }}>
-          Planning, architecture, UI/UX, implementation, testing, deployment,
-          and long-term maintenance.
+        <div style={{ marginBottom: 16, fontSize: 22, lineHeight: 4.0 }}>
+          Our Approach
         </div>
 
-        <div style={{ marginBottom: 18, fontSize: 16, opacity: 0.9 }}>
-          Plan → Design → Build → Test → Deploy
+        <div style={{ marginBottom: 18, fontSize: 22, opacity: 0.9 }}>
+          Example Development
         </div>
-
+        <div style={{ marginBottom: 18, fontSize: 22, opacity: 0.9 }}>
+          Scalable and efficient
+        </div>
         <button
           style={{
             padding: "10px 18px",
@@ -105,8 +105,7 @@ export default function Home() {
             color: "#fff",
             fontSize: 15,
             fontWeight: 500,
-          }}
-        >
+          }} >
           Explore
         </button>
       </section>
