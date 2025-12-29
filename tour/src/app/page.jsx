@@ -3,9 +3,9 @@ import Link from "next/link";
 export default function Home() {
   return (
     <div style={{ minHeight: "100vh", position: "relative", overflow: "hidden" }}>
-      {/* Background: Marzipano demo as iframe */}
+      
       <iframe
-        src="https://www.marzipano.net/demos/hotspot-rect/"
+        src="https://app.cloudpano.com/tours/MMqLrAhy2oN?sceneId=tDK3oUsTeP"
         style={{
           position: "absolute",
           inset: 0,
@@ -18,21 +18,21 @@ export default function Home() {
         allow="fullscreen"
       />
 
-      {/* NAV (right + down) */}
+      
       <nav
         style={{
           position: "absolute",
           top: 98,
-          left: 250,
+          right: 180,
           zIndex: 10,
           display: "flex",
-          gap: 22,
+          gap: 28,
           alignItems: "center",
           padding: "14px 18px",
           borderRadius: 14,
-          background: "rgba(175, 196, 236, 0.75)",
-          backdropFilter: "blur(6px)",
-          WebkitBackdropFilter: "blur(6px)",
+          // background: "rgba(175, 196, 236, 0.75)",
+          // backdropFilter: "blur(6px)",
+          // WebkitBackdropFilter: "blur(6px)",
         }}
       >
         {["Home", "Register", "Login", "Room", "Logout"].map((label) => (
@@ -40,10 +40,10 @@ export default function Home() {
             key={label}
             href={label === "Home" ? "/" : `/${label.toLowerCase()}`}
             style={{
-              color: "#630f0fff",
+              color: "#530606ff",
               textDecoration: "none",
-              fontSize: 16,
-              fontWeight: 600,
+              fontSize: 26,
+              fontWeight: 200,
             }}
           >
             {label}
@@ -51,7 +51,7 @@ export default function Home() {
         ))}
       </nav>
 
-      {/* TITLE (middle-right) */}
+      
       <h1
         style={{
           position: "absolute",
@@ -60,14 +60,56 @@ export default function Home() {
           zIndex: 10,
           margin: 0,
           fontSize: 42,
-          fontWeight: 900,
-          color: "#f5f0abff",
-          letterSpacing: "-0.01em",
-          textShadow: "0 6px 18px rgba(82, 6, 6, 0.1)",
+          fontWeight: 200,
+          color: "#530909ff",
+          letterSpacing: "-0.09em",
+          textShadow: "0 6px 18px rgba(226, 25, 11, 0.1)",
         }}
       >
-        AptiCraft Tour
+        AptiCraft
       </h1>
+<section
+        style={{
+          position: "absolute",
+          top: "22%",
+          left: 24,
+          zIndex: 10,
+          width: "380px",
+          padding: "22px",
+          background: "rgba(215, 195, 255, 0.45)",
+          borderRadius: 18,
+          fontFamily: "Inter, Segoe UI, system-ui, sans-serif",
+          color: "#2f1b4f",
+        }}
+      >
+        <div style={{ marginBottom: 18, fontSize: 22, fontWeight: 500 }}>
+          Software Development
+        </div>
+
+        <div style={{ marginBottom: 16, fontSize: 17, lineHeight: 1.5 }}>
+          Planning, architecture, UI/UX, implementation, testing, deployment,
+          and long-term maintenance.
+        </div>
+
+        <div style={{ marginBottom: 18, fontSize: 16, opacity: 0.9 }}>
+          Plan → Design → Build → Test → Deploy
+        </div>
+
+        <button
+          style={{
+            padding: "10px 18px",
+            borderRadius: 12,
+            border: "none",
+            cursor: "pointer",
+            background: "#5a3fcf",
+            color: "#fff",
+            fontSize: 15,
+            fontWeight: 500,
+          }}
+        >
+          Explore
+        </button>
+      </section>
     </div>
   );
 }
