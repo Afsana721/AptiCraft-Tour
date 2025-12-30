@@ -4,22 +4,28 @@ import Link from "next/link";
 
 export default function Home() {
   return (
-    <div style={{ minHeight: "100vh", position: "relative", overflow: "hidden" }}>
-      <iframe
-        src="https://panoraven.com/en/embed/5yvHJSL8MJ"
-        style={{
-          position: "absolute",
-          inset: 0,
-          width: "100%",
-          height: "100%",
-          border: "none",
-          zIndex: 0,
-          opacity: 0.9,
-        }}
-        allowFullScreen
-      />
+   <div style={{ minHeight: "100vh", position: "relative", overflow: "hidden" }} className="min-h-screen relative overflow-hidden">
+  <video
+    src="/115543-704906258_tiny.mp4"
+    autoPlay
+    muted
+    loop
+    playsInline
+    style={{
+      position: "absolute",
+      inset: 0,
+      width: "100%",
+      height: "100%",
+      objectFit: "cover",
+      border: "none",
+      zIndex: 0,
+    }}
+    className="absolute inset-0 w-full h-full object-cover z-0"
+  />
+
 
       <nav
+        className="absolute z-10 flex items-center gap-7 top-[98px] right-[180px]"
         style={{
           position: "absolute",
           top: 98,
@@ -47,6 +53,7 @@ export default function Home() {
       </nav>
 
       <h1
+        className="absolute z-10 m-0 text-[44px] font-light text-[#530909] tracking-[-0.05em] top-[30%] right-[10%]"
         style={{
           position: "absolute",
           top: "30%",
@@ -63,6 +70,7 @@ export default function Home() {
       </h1>
 
       <section
+        className="absolute z-10 w-[420px] px-[26px] py-[28px] rounded-[18px] font-inter bg-transparent top-[18%] left-8"
         style={{
           position: "absolute",
           top: "18%",
