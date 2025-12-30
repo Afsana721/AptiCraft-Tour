@@ -4,24 +4,23 @@ import Link from "next/link";
 
 export default function Home() {
   return (
-   <div style={{ minHeight: "100vh", position: "relative", overflow: "hidden" }} className="min-h-screen relative overflow-hidden">
-  <video
-    src="/115543-704906258_tiny.mp4"
-    autoPlay
-    muted
-    loop
-    playsInline
-    style={{
-      position: "absolute",
-      inset: 0,
-      width: "100%",
-      height: "100%",
-      objectFit: "cover",
-      border: "none",
-      zIndex: 0,
-    }}
-    className="absolute inset-0 w-full h-full object-cover z-0"
-  />
+    <div style={{ minHeight: "100vh", position: "relative", overflow: "hidden" }} className="min-h-screen relative overflow-hidden">
+      <video
+        src="/115543-704906258_tiny.mp4"
+        autoPlay
+        muted
+        loop
+        playsInline
+        style={{
+          position: "absolute",
+          inset: 0,
+          width: "100%",
+          height: "100%",
+          objectFit: "cover",
+          border: "none",
+          zIndex: 0,
+        }}
+        className="absolute inset-0 w-full h-full object-cover z-0 " />
 
 
       <nav
@@ -87,7 +86,7 @@ export default function Home() {
           Software Development
         </div>
 
-        
+
         {["Our Approach", "Example Application", "Requirements"].map((item) => (
           <div key={item} style={{ marginBottom: 18 }}>
             <div
@@ -105,6 +104,8 @@ export default function Home() {
           </div>
         ))}
       </section>
+      
+      
     </div>
   );
 }
