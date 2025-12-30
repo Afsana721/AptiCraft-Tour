@@ -67,19 +67,19 @@ export default function Home() {
         className="absolute z-10 m-0 text-5xl font-light text-white tracking-[-0.05em] top-[30%] right-[10%]"
         style={{
           position: "absolute",
-          top: "30%",
-          right: "10%",
+          top: "25%",
+          right: "45%",
           zIndex: 10,
           margin: 0,
           fontSize: 54,
           fontWeight: 300,
           // FIX: Changed to white for better contrast
           color: "#ffffff", 
-          letterSpacing: "-0.05em",
+          letterSpacing: "-0.08em",
           textShadow: "0 0 8px rgba(0,0,0,0.8)",
         }}
       >
-        AptiCraft Tour
+        AptiCraft
       </h1>
 
       {/* Sidebar Section */}
@@ -143,22 +143,23 @@ export default function Home() {
             className="uppercase tracking-widest mb-4 font-extrabold" 
             style={{ 
                 // Explicitly set color to white and font size/weight using style
-                color: "#ddddc4ff",
+                color: "#FEFEFA",
                 fontSize: "1.75rem", // Larger font size (like Tailwind's text-4xl)
                 fontWeight: 400, // Extrabold weight
                 // Refined shadow for a subtle, chiseled/embossed white effect
-                 textShadow: "0 1px 1px rgba(241, 220, 24, 0.7), 0 -1px 1px rgba(109, 7, 7, 0.9)" 
+                 textShadow: "0 1px 1px rgba(235, 215, 36, 0.7), 0 -1px 1px rgba(230, 217, 217, 0.9)" 
             }} >
-            Explore Software & Web empowering systems
+            Software & Web Empowering
           </p>
           
-          <p className="text-2xl text-white mb-4 font-light" style={{ color: "#32f0f0ff", marginTop: "16px", fontSize: "18px", fontWeight: "200" }}>
+          <p className="text-2xl text-white mb-4 font-light" 
+          style={{ color: "#FEFEFA", marginTop: "16px", fontSize: "18px", fontWeight: "200", textShadow: "0 0 5px rgba(36, 189, 161, 0.6)" }}>
             Software enables systems to manage data, memory, and operations beyond manual or written processes.
           </p>
-          <p className="text-2xl text-white mb-4 font-light" style={{ color: "#32f0f0ff", marginTop: "16px", fontSize: "18px", fontWeight: "200" }}>
+          <p className="text-2xl text-white mb-4 font-light" style={{ color: "#FEFEFA", marginTop: "16px", fontSize: "18px", fontWeight: "200" }}>
             Software development defines how these systems are designed, built, secured, and maintained using modern technologies.
           </p>
-          <p className="text-2xl text-white font-light" style={{ color: "#32f0f0ff", marginTop: "16px", fontSize: "18px", fontWeight: "200"  }}>
+          <p className="text-2xl text-white font-light" style={{ color: "#FEFEFA", marginTop: "16px", fontSize: "18px", fontWeight: "200"  }}>
             Web development delivers these capabilities over the internet, ensuring accessibility, reliability, and responsible use at scale.
           </p>
         </div>
