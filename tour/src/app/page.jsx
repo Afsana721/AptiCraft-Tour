@@ -50,7 +50,7 @@ export default function Home() {
             href={label === "Home" ? "#" : `/${label.toLowerCase()}`}
             style={{
               // FIX: Changed to white for better contrast
-              color: "#ffffff", 
+              color: "#E48400", 
               textDecoration: "none",
               fontSize: 26,
               fontWeight: 300,
@@ -74,9 +74,9 @@ export default function Home() {
           fontSize: 54,
           fontWeight: 300,
           // FIX: Changed to white for better contrast
-          color: "#ffffff", 
-          letterSpacing: "-0.08em",
-          textShadow: "0 0 8px rgba(0,0,0,0.8)",
+          color: "#660000", 
+          letterSpacing: "-0.09em",
+          textShadow: "5 9 2px rgba(235, 227, 127, 0.7)",
         }}
       >
         AptiCraft
