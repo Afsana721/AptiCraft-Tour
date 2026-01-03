@@ -178,21 +178,31 @@ export default function Home() {
 function LazyApproachSection() {
   const ref = React.useRef(null);
   const [visible, setVisible] = React.useState(false);
+  const [data, setData] = React.useState(null);
 
+  // observe scroll
   React.useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
           setVisible(true);
-          observer.disconnect(); // run once
         }
       },
-      { threshold: 0.25 }
+      { threshold: 0.1 }
     );
 
     if (ref.current) observer.observe(ref.current);
     return () => observer.disconnect();
   }, []);
+
+  // fetch JSON after visible
+  React.useEffect(() => {
+    if (!visible) return;
+    fetch('/data.json')
+      .then((res) => res.json())
+      .then((json) => setData(json.sections?.[0] || null))
+      .catch(() => null);
+  }, [visible]);
 
   return (
     <section
@@ -200,40 +210,30 @@ function LazyApproachSection() {
       style={{
         position: 'relative',
         minHeight: '100vh',
-        background: '#fdf6f6ff',
-        padding: '120px 60px',
-        color: '#ffffff'
-      }}
-    >
-      {!visible && (
-        <div style={{ opacity: 0.4 }}>Scroll to load content…</div>
-      )}
-
-      {visible && (
+        background:
+          'linear-gradient(135deg, transparent)',
+        padding: '120px 60px'
+      }} >
+      {data && (
         <div>
-          {/* FIRST TOPIC: Our Approach (static test, JSON later) */}
-          <h2 style={{ fontSize: 36, marginBottom: 24 }}>
-            Our Approach
+          <h2 style={{ fontSize: 36, marginBottom: 24, marginLeft: '50%', color: '#e9e7dfff' }}>
+            {data.title}
           </h2>
 
-          <div style={{ display: 'flex', gap: 32, alignItems: 'flex-start', flexWrap: 'wrap' }}>
-            {/* Image (from JSON later) */}
+           <div style={{ display: 'flex', flexDirection: 'column', gap: 32 }}>
             <img
-              src="/img.png"
-              alt="Our Approach"
+              src={data.image}
+              alt={data.title}
               style={{
-                width: 420,
+                width: '100%',
                 maxWidth: '100%',
+                height: 580,
                 borderRadius: 16,
-                boxShadow: '0 20px 40px rgba(0,0,0,0.6)'
-              }}
-            />
+                boxShadow: '0 20px 20px rgba(240, 231, 190, 0.35)'
+              }}/>
 
-            {/* Text content */}
-            <p style={{ maxWidth: 520, lineHeight: 1.7, fontSize: 18 }}>
-              This section loads only after the video when the user scrolls.
-              Next step: replace this static content with server-driven JSON
-              (title, description, images) fetched inside useEffect.
+            <p style={{ maxWidth: 520, lineHeight: 1.7, fontSize: 18, color: '#cddfc6ff' }}>
+              {data.text}
             </p>
           </div>
         </div>
@@ -241,4 +241,5 @@ function LazyApproachSection() {
     </section>
   );
 }
+
 
