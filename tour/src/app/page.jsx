@@ -10,7 +10,7 @@ export default function Home() {
     <div style={{ minHeight: "100vh", position: "relative", overflow: "hidden" }} className="min-h-screen relative overflow-hidden">
       {/* Background Video */}
       <video
-        src="/create.mp4"
+        src="/home.mp4"
         autoPlay
         muted
         loop
@@ -30,7 +30,7 @@ export default function Home() {
       {/* FIX: Dark Overlay for better text visibility (add a subtle black layer over the video) */}
       <div 
         className="absolute inset-0 z-[1]" 
-        style={{ backgroundColor: 'rgba(0, 0, 0, 0.2)' }}
+        style={{ backgroundColor: 'rgba(235, 224, 224, 0.2)' }}
       ></div>
 
       {/* Navigation Bar */}
