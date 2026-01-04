@@ -121,50 +121,48 @@ export default function Home() {
       
             {/* Center Text Section (Below AptiCraft title) */}
       <section
-        className="text-center"
         style={{
           position: "absolute",
-          left: "60%",
-          top: "30%",
-          transform: "translate(-50%, -50%)",
+          left: "50%",
+          top: "28%",
+          transform: "translateX(-50%)",
           width: "100%",
-          maxWidth: 672,
+          maxWidth: 720,
           zIndex: 20,
-          pointerEvents: "auto",
-        }} >
-        <div 
-          className="px-8 py-6 mx-auto"
-          style={{}} >
-          
-          {/* FIX: Targeted changes for the requested line: Explicit white color and refined embossing shadow */}
-          <p 
-            className="uppercase tracking-widest mb-4 font-extrabold" 
-            style={{ 
-                // Explicitly set color to white and font size/weight using style
-                color: "#FEFEFA",
-                fontSize: "1.75rem", // Larger font size (like Tailwind's text-4xl)
-                fontWeight: 400, // Extrabold weight
-                // Refined shadow for a subtle, chiseled/embossed white effect
-                 textShadow: "0 1px 1px rgba(235, 215, 36, 0.7), 0 -1px 1px rgba(230, 217, 217, 0.9)" 
-            }} >
+        }}
+      >
+        <div style={{ padding: "0 24px" }}>
+          <p
+            style={{
+              color: "#FEFEFA",
+              fontSize: "1.75rem",
+              fontWeight: 400,
+              textAlign: "center",
+              marginBottom: 18,
+              textShadow:
+                "0 1px 1px rgba(235,215,36,.7), 0 -1px 1px rgba(230,217,217,.9)",
+            }}
+          >
             Software & Web Empowering
           </p>
-          
-          <p className="text-2xl text-white mb-4 font-light" 
-          style={{ color: "#FEFEFA", marginTop: "16px", fontSize: "18px", fontWeight: "200", textShadow: "0 0 5px rgba(36, 189, 161, 0.6)" }}>
-            Software enables systems to manage data, memory, and operations beyond manual or written processes.
-          </p>
-          <p className="text-2xl text-white mb-4 font-light" style={{ color: "#FEFEFA", marginTop: "16px", fontSize: "18px", fontWeight: "200" }}>
-            Software development defines how these systems are designed, built, secured, and maintained using modern technologies.
-          </p>
-          <p className="text-2xl text-white font-light" style={{ color: "#FEFEFA", marginTop: "16px", fontSize: "18px", fontWeight: "200"  }}>
-            Web development delivers these capabilities over the internet, ensuring accessibility, reliability, and responsible use at scale.
-          </p>
+
+          <div style={{ textAlign: "left" }}>
+            <p style={{ color: "#FEFEFA", fontSize: 18, fontWeight: 200, marginBottom: 14 }}>
+              Software enables systems to manage data, memory, and operations beyond manual or written processes.
+            </p>
+            <p style={{ color: "#FEFEFA", fontSize: 18, fontWeight: 200, marginBottom: 14 }}>
+              Software development defines how these systems are designed, built, secured, and maintained using modern technologies.
+            </p>
+            <p style={{ color: "#FEFEFA", fontSize: 18, fontWeight: 200 }}>
+              Web development delivers these capabilities over the internet, ensuring accessibility, reliability, and responsible use at scale.
+            </p>
+          </div>
         </div>
       </section>
 
-            {/* ===== Lazy-loaded Section AFTER video ===== */}
-      <div style={{ marginTop: '120vh' }}>
+      {/* ===== Lazy-loaded Section AFTER video ===== */}
+      {/* ===== Lazy-loaded Section AFTER video ===== */}
+      <div style={{ marginTop: '130vh', position: 'relative', zIndex: 5 }}>
         <LazyApproachSection />
       </div>
     </div>
@@ -173,35 +171,28 @@ export default function Home() {
 
 /* --------------------------------------------------
    Lazy Approach Section
-   - Appears only when user scrolls past video
-   - Will later fetch JSON + images from server
+   - Appears only after full video viewport
+   - Clean, non-overlapping layout
 --------------------------------------------------- */
 function LazyApproachSection() {
   const ref = React.useRef(null);
   const [visible, setVisible] = React.useState(false);
   const [data, setData] = React.useState(null);
 
-  // observe scroll
   React.useEffect(() => {
     const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setVisible(true);
-        }
-      },
-      { threshold: 0.1 }
+      ([entry]) => entry.isIntersecting && setVisible(true),
+      { threshold: 0.25 }
     );
-
     if (ref.current) observer.observe(ref.current);
     return () => observer.disconnect();
   }, []);
 
-  // fetch JSON after visible
   React.useEffect(() => {
     if (!visible) return;
     fetch('/data.json')
-      .then((res) => res.json())
-      .then((json) => setData(json.sections?.[0] || null))
+      .then(res => res.json())
+      .then(json => setData(json.sections?.[0] || null))
       .catch(() => null);
   }, [visible]);
 
@@ -211,36 +202,58 @@ function LazyApproachSection() {
       style={{
         position: 'relative',
         minHeight: '100vh',
-        background:
-          'linear-gradient(135deg, transparent)',
-        padding: '120px 60px'
-      }} >
+        padding: '40px 20px 40px',
+        display: 'flex',
+        justifyContent: 'center'
+      }}
+    >
       {data && (
-        <div>
-          <h2 style={{ position:'absolute', top:'20%', left:'50%', transform:'translate(-50%,-50%)', fontSize: 36, color: 'rgba(12, 0, 0, 1)' }}>
+        <div style={{ maxWidth: 1100, width: '100%' }}>
+          <h2
+            style={{
+              position: 'absolute',
+              top: '8%',
+              left: '50%',
+              transform: 'translate(-50%, -50%)',
+              zIndex: 20,
+              color: '#ffffff',
+              fontSize: 42,
+              textAlign: 'center'
+            }}
+          >
             {data.title}
           </h2>
 
-           <div style={{ display: 'flex', flexDirection: 'column', gap: 32 }}>
-            <img
-              src={data.image}
-              alt={data.title}
-              style={{
-                width: '100%',
-                maxWidth: '100%',
-                height: 580,
-                borderRadius: 16,
-                boxShadow: '0 20px 20px rgba(240, 231, 190, 0.35)'
-              }}/>
+          <img
+            src={data.image}
+            alt={data.title}
+            style={{
+              width: '100%',
+              height: 520,
+              objectFit: 'cover',
+              borderRadius: 18,
+              marginBottom: 60
+            }}
+          />
 
-            <p style={{  maxWidth: 820, lineHeight: 8, left:'40%', fontSize: 18, color: '#232c22ff' }}>
-              {data.topics}
-            </p>
+          <div style={{ maxWidth: 860, margin: '0 auto' }}>
+            {data.topics.map((t, i) => (
+              <p
+                key={i}
+                style={{
+                  marginBottom: 32,
+                  fontSize: 18,
+                  lineHeight: 1.9,
+                  color: '#232c22'
+                }}
+              >
+                {t}
+              </p>
+            ))}
           </div>
         </div>
       )}
     </section>
   );
 }
-
 
