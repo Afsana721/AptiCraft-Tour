@@ -483,3 +483,6 @@ PERFORMANCE OVERLAY (APPLIES TO GRAPH)
 
 ### System Design ###
 https://www.hiredintech.com/system-design/the-system-design-process/
+
+### free video generator link ###
+https://upsampler.com/free-video-generator-no-signup

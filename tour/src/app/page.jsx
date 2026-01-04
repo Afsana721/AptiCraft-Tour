@@ -23,15 +23,15 @@ export default function Home() {
           objectFit: "cover",
           border: "none",
           zIndex: 0,
-           opacity: 0.7,
+          // opacity: 0.7,
         }}
         className="absolute inset-0 w-full h-full object-cover z-0 " />
 
       {/* FIX: Dark Overlay for better text visibility (add a subtle black layer over the video) */}
-      <div 
-        className="absolute inset-0 z-[1]" 
-        style={{ backgroundColor: 'rgba(235, 224, 224, 0.2)' }}
-      ></div>
+      {/* <div
+        className="absolute inset-0 z-[1]"
+        style={{ backgroundColor: 'rgba(10, 2, 2, 0.2)' }}
+      ></div> */}
 
       {/* Navigation Bar */}
       <nav
@@ -53,11 +53,11 @@ export default function Home() {
             href={label === "Home" ? "#" : `/${label.toLowerCase()}`}
             style={{
               // FIX: Changed to white for better contrast
-              color: "#E48400", 
+              color: "#E48400",
               textDecoration: "none",
               fontSize: 26,
               fontWeight: 300,
-              textShadow: "0 0 5px rgba(0,0,0,0.8)",
+              // textShadow: "0 0 5px rgba(0,0,0,0.8)",
             }}
           >
             {label}
@@ -77,9 +77,9 @@ export default function Home() {
           fontSize: 54,
           fontWeight: 300,
           // FIX: Changed to white for better contrast
-          color: "#660000", 
+          color: "#660000",
           letterSpacing: "-0.09em",
-          textShadow: "5 9 2px rgba(235, 227, 127, 0.7)",
+          // textShadow: "5 9 2px rgba(235, 227, 127, 0.7)",
         }} >
         AptiCraft
       </h1>
@@ -110,7 +110,7 @@ export default function Home() {
                 paddingLeft: 8,
                 borderLeft: "2px solid #ffffff", // FIX: Changed border color for contrast
                 color: "#ffffff", // FIX: Changed text color for contrast
-                textShadow: "0 0 4px rgba(0,0,0,0.6)",
+                // textShadow: "0 0 4px rgba(0,0,0,0.6)",
               }} >
               {item}
             </div>
@@ -118,8 +118,8 @@ export default function Home() {
           </div>
         ))}
       </section>
-      
-            {/* Center Text Section (Below AptiCraft title) */}
+
+      {/* Center Text Section (Below AptiCraft title) */}
       <section
         style={{
           position: "absolute",
@@ -139,8 +139,8 @@ export default function Home() {
               fontWeight: 400,
               textAlign: "center",
               marginBottom: 18,
-              textShadow:
-                "0 1px 1px rgba(235,215,36,.7), 0 -1px 1px rgba(230,217,217,.9)",
+              // textShadow:
+              //   "0 1px 1px rgba(235,215,36,.7), 0 -1px 1px rgba(230,217,217,.9)",
             }}
           >
             Software & Web Empowering
@@ -202,49 +202,51 @@ function LazyApproachSection() {
       style={{
         position: 'relative',
         minHeight: '100vh',
-        padding: '40px 20px 40px',
+        padding: '24px 20px 32px',
         display: 'flex',
         justifyContent: 'center'
-      }}
-    >
+      }}>
       {data && (
         <div style={{ maxWidth: 1100, width: '100%' }}>
           <h2
             style={{
-              position: 'absolute',
-              top: '8%',
-              left: '50%',
-              transform: 'translate(-50%, -50%)',
-              zIndex: 20,
-              color: '#ffffff',
-              fontSize: 42,
-              textAlign: 'center'
-            }}
-          >
+              position: 'absolute', top: '10%', fontSize: 42, left: '50%', transform: 'translate(-50%,-50%)', zIndex: 20
+            }}>
             {data.title}
           </h2>
 
-          <img
-            src={data.image}
-            alt={data.title}
-            style={{
-              width: '100%',
-              height: 520,
-              objectFit: 'cover',
-              borderRadius: 18,
-              marginBottom: 60
-            }}
-          />
+          <div style={{ position: 'relative', marginBottom: 40 }}>
+            <img
+              src={data.image}
+              alt={data.title}
+              style={{
+                width: '100%',
+                height: 520,
+                objectFit: 'cover',
+                borderRadius: 18,
+                display: 'block'
+              }}
+            />
+          </div>
 
-          <div style={{ maxWidth: 860, margin: '0 auto' }}>
+          <div
+            style={{
+              maxWidth: 1100,
+              margin: '0 auto',
+              padding: '10px 10px',
+              // background: 'rgba(224, 219, 219, 0.16)',
+              backdropFilter: 'blur(6px)',
+              borderRadius: 16
+            }}
+          >
             {data.topics.map((t, i) => (
               <p
                 key={i}
                 style={{
-                  marginBottom: 32,
-                  fontSize: 18,
-                  lineHeight: 1.9,
-                  color: '#232c22'
+                  marginBottom: 22,
+                  fontSize: 17,
+                  lineHeight: 1.85,
+                  color: '#f7f4f4ff'
                 }}
               >
                 {t}
@@ -253,6 +255,7 @@ function LazyApproachSection() {
           </div>
         </div>
       )}
+
     </section>
   );
 }
