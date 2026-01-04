@@ -36,7 +36,7 @@ The easiest way to deploy your Next.js app is to use the [Vercel Platform](https
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
 
 
-### Smoth User experience where low configuration of users ###
+### Smo0th User experience where low configuration of users ###
 Pipeline story from page load → smooth 3D on low-end devices.
 
 1️⃣ First Load Rule (Critical Path)
