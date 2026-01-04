@@ -10,7 +10,7 @@ export default function Home() {
     <div style={{ minHeight: "100vh", position: "relative", overflow: "hidden" }} className="min-h-screen relative overflow-hidden">
       {/* Background Video */}
       <video
-        src="/115543-704906258_tiny.mp4"
+        src="/create.mp4"
         autoPlay
         muted
         loop
@@ -23,6 +23,7 @@ export default function Home() {
           objectFit: "cover",
           border: "none",
           zIndex: 0,
+           opacity: 0.7,
         }}
         className="absolute inset-0 w-full h-full object-cover z-0 " />
 
@@ -163,7 +164,7 @@ export default function Home() {
       </section>
 
             {/* ===== Lazy-loaded Section AFTER video ===== */}
-      <div style={{ marginTop: '160vh' }}>
+      <div style={{ marginTop: '120vh' }}>
         <LazyApproachSection />
       </div>
     </div>
@@ -232,8 +233,8 @@ function LazyApproachSection() {
                 boxShadow: '0 20px 20px rgba(240, 231, 190, 0.35)'
               }}/>
 
-            <p style={{  maxWidth: 820, lineHeight: 8, left:'40%', fontSize: 18, color: '#dae7d8ff' }}>
-              {data.text}
+            <p style={{  maxWidth: 820, lineHeight: 8, left:'40%', fontSize: 18, color: '#232c22ff' }}>
+              {data.topics}
             </p>
           </div>
         </div>

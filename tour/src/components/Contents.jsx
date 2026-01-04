@@ -1,5 +1,3 @@
-// components/Contents.jsx
-// CLIENT COMPONENT – fetches data from API and sends it up to Home
 
 "use client";
 
@@ -35,7 +33,4 @@ export default function Contents({ onSend }) {
   return null;
 }
 
-// Notes:
-// - Fetch happens once on mount
-// - No rendering here (performance)
-// - Data flows: API → Contents → Home
+
