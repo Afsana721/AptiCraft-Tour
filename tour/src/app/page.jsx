@@ -216,7 +216,7 @@ function LazyApproachSection() {
       }} >
       {data && (
         <div>
-          <h2 style={{ fontSize: 36, marginBottom: 24, marginLeft: '50%', color: '#e9e7dfff' }}>
+          <h2 style={{ position:'absolute', top:'20%', left:'50%', transform:'translate(-50%,-50%)', fontSize: 36, color: 'rgba(12, 0, 0, 1)' }}>
             {data.title}
           </h2>
 
@@ -232,7 +232,7 @@ function LazyApproachSection() {
                 boxShadow: '0 20px 20px rgba(240, 231, 190, 0.35)'
               }}/>
 
-            <p style={{ maxWidth: 520, lineHeight: 1.7, fontSize: 18, color: '#cddfc6ff' }}>
+            <p style={{  maxWidth: 820, lineHeight: 8, left:'40%', fontSize: 18, color: '#dae7d8ff' }}>
               {data.text}
             </p>
           </div>
