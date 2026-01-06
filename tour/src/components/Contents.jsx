@@ -37,38 +37,55 @@ export default function Contents() {
 // -------- UI blocks (separate layouts, same container) --------
 function ApproachUI({ data }) {
   return (
-    <section className="space-y-6">
+    <section className="max-w-5xl mx-auto px-6 py-20 space-y-16 text-neutral-200">
       {/* Title */}
-      <h2 className="text-3xl font-semibold">{data.title}</h2>
+      <header className="space-y-4">
+        <h2 className="text-4xl font-bold tracking-tight text-white">{data.title}</h2>
+        <div className="w-16 h-1 bg-neutral-600" />
+      </header>
 
-      {/* Media placeholders (image / video after title) */}
-      {data.media?.heroImage && (
-        <img src={data.media.heroImage} alt="approach visual" className="w-full rounded-lg" />
-      )}
-      {data.media?.video && (
-        <video src={data.media.video} controls className="w-full rounded-lg" />
+      {/* Media */}
+      {(data.media?.heroImage || data.media?.video) && (
+        <div className="space-y-6">
+          {data.media?.heroImage && (
+            <img
+              src={data.media.heroImage}
+              alt="approach visual"
+              className="w-full rounded-xl border border-neutral-800"
+            />
+          )}
+          {data.media?.video && (
+            <video
+              src={data.media.video}
+              controls
+              className="w-full rounded-xl border border-neutral-800"
+            />
+          )}
+        </div>
       )}
 
       {/* Overview */}
-      <div className="space-y-3">
-        <p>{data.overview?.description}</p>
-        <p className="text-neutral-600">{data.overview?.technicalContext}</p>
+      <div className="space-y-6 max-w-3xl">
+        <p className="text-lg leading-relaxed">{data.overview?.description}</p>
+        <p className="text-sm leading-relaxed text-neutral-400">{data.overview?.technicalContext}</p>
       </div>
 
       {/* Software categories */}
       {data.softwareCategories && (
-        <div className="space-y-4">
+        <div className="grid gap-10">
           {Object.entries(data.softwareCategories).map(([key, item]) => (
-            <div key={key} className="border-l pl-4">
-              <h3 className="font-medium capitalize">{key.replace(/([A-Z])/g, " $1")}</h3>
-              <p>{item.description}</p>
+            <div key={key} className="space-y-3 border-l border-neutral-800 pl-6">
+              <h3 className="text-xl font-semibold text-white capitalize">
+                {key.replace(/([A-Z])/g, " $1")}
+              </h3>
+              <p className="leading-relaxed">{item.description}</p>
               {item.components && (
-                <ul className="list-disc ml-5">
+                <ul className="list-disc ml-5 space-y-1 text-neutral-400">
                   {item.components.map((c, i) => <li key={i}>{c}</li>)}
                 </ul>
               )}
               {item.tools && (
-                <ul className="list-disc ml-5">
+                <ul className="list-disc ml-5 space-y-1 text-neutral-400">
                   {item.tools.map((t, i) => <li key={i}>{t}</li>)}
                 </ul>
               )}
@@ -79,10 +96,10 @@ function ApproachUI({ data }) {
 
       {/* Roles */}
       {data.rolesInDevelopment && (
-        <div className="space-y-2">
-          <h3 className="font-medium">Roles in Development</h3>
-          <p>{data.rolesInDevelopment.description}</p>
-          <p className="text-neutral-600">{data.rolesInDevelopment.note}</p>
+        <div className="max-w-3xl space-y-3 pt-6 border-t border-neutral-800">
+          <h3 className="text-xl font-semibold text-white">Roles in Development</h3>
+          <p className="leading-relaxed">{data.rolesInDevelopment.description}</p>
+          <p className="text-sm text-neutral-400">{data.rolesInDevelopment.note}</p>
         </div>
       )}
     </section>

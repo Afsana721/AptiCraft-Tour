@@ -1,8 +1,9 @@
 {
-  "approach": {
+  "type": "approach",
+  "data": {
     "title": "Approach to Software Development",
     "media": {
-      "heroImage": "", 
+      "heroImage": "approach.png",
       "video": "",
       "gallery": []
     },
