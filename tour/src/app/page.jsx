@@ -190,7 +190,7 @@ function LazyApproachSection() {
 
   React.useEffect(() => {
     if (!visible) return;
-    fetch('/data.json')
+    fetch('/approach.json')
       .then(res => res.json())
       .then(json => setData(json.sections?.[0] || null))
       .catch(() => null);
