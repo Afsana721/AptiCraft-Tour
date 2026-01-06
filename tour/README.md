@@ -485,4 +485,7 @@ PERFORMANCE OVERLAY (APPLIES TO GRAPH)
 https://www.hiredintech.com/system-design/the-system-design-process/
 
 ### free video generator link ###
-https://upsampler.com/free-video-generator-no-signup
+https://upsampler.com/free-video-generator-no-signup 
+
+*** development Approach *** 
+https://www.ibm.com/think/topics/software-development
