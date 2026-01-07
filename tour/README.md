@@ -489,3 +489,35 @@ https://upsampler.com/free-video-generator-no-signup
 
 *** development Approach *** 
 https://www.ibm.com/think/topics/software-development
+
+
+### reduce client side load ### v
+*** Client controls intent; server controls volume. ***
+Load nothing by default, fetch only on real user intent, cancel work when intent changes, and render only what is visible.
+
+Client (reduce client load)
+
+IntersectionObserver → decides when to load
+
+AbortController → cancels fetch on intent change
+
+requestIdleCallback → runs work only when browser is free
+
+indexedDB / Cache API → stores small chunks, not full data
+
+
+### reduce server side load ###
+Send minimal data per request, chunk responses, cache aggressively, and avoid sending data unless the client truly asks for it.
+
+Pagination / cursor params (?limit=5&cursor=x) → send less data
+
+HTTP caching headers (ETag, Cache-Control) → avoid recompute
+
+Rate limiting / throttling → protect server
+
+Conditional responses (If-None-Match) → skip resend
+
+
+*** Note ***
+Core inside truth:
+Browser decides WHEN, Server decides HOW MUCH, React only RENDERS what survives both.

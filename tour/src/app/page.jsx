@@ -1,11 +1,29 @@
 "use client";
 
 import React from "react";
-
+import Contents from "../components/Contents";
 // FIX: Removed 'next/link' import to prevent compilation errors in this environment
 // import Link from "next/link"; 
 
 export default function Home() {
+  // Lazy intent observer
+// Purpose: register DOM-level intent (scroll into view)
+// No data is loaded here — this only flips a DOM signal
+React.useEffect(() => {
+    const el = document.getElementById('content-mount');
+    if (!el) return;
+    // IntersectionObserver watches ONLY the mount point
+// When user reaches this section, intent is detected
+const observer = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) {
+        // Mark intent on DOM (React can react to this signal)
+el.dataset.active = 'true';
+        observer.disconnect();
+      }
+    }, { threshold: 0.1 });
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
   return (
     <div style={{ minHeight: "100vh", position: "relative", overflow: "hidden" }} className="min-h-screen relative overflow-hidden">
       {/* Background Video */}
@@ -162,101 +180,15 @@ export default function Home() {
 
       {/* ===== Lazy-loaded Section AFTER video ===== */}
       {/* ===== Lazy-loaded Section AFTER video ===== */}
-      <div style={{ marginTop: '130vh', position: 'relative', zIndex: 5 }}>
-        <LazyApproachSection />
+            {/* ===== Content Mount Point (EMPTY by default) ===== */}
+            {/* Content mount point
+    - Empty on first paint (light HTML)
+    - UI + data load ONLY after intent is detected */}
+<div id="content-mount" style={{ marginTop: '130vh', position: 'relative', zIndex: 5 }}>
+        <Contents />
       </div>
     </div>
   );
 }
 
-/* --------------------------------------------------
-   Lazy Approach Section
-   - Appears only after full video viewport
-   - Clean, non-overlapping layout
---------------------------------------------------- */
-function LazyApproachSection() {
-  const ref = React.useRef(null);
-  const [visible, setVisible] = React.useState(false);
-  const [data, setData] = React.useState(null);
-
-  React.useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => entry.isIntersecting && setVisible(true),
-      { threshold: 0.25 }
-    );
-    if (ref.current) observer.observe(ref.current);
-    return () => observer.disconnect();
-  }, []);
-
-  React.useEffect(() => {
-    if (!visible) return;
-    fetch('/approach.json')
-      .then(res => res.json())
-      .then(json => setData(json.sections?.[0] || null))
-      .catch(() => null);
-  }, [visible]);
-
-  return (
-    <section
-      ref={ref}
-      style={{
-        position: 'relative',
-        minHeight: '100vh',
-        padding: '24px 20px 32px',
-        display: 'flex',
-        justifyContent: 'center'
-      }}>
-      {data && (
-        <div style={{ maxWidth: 1100, width: '100%' }}>
-          <h2
-            style={{
-              position: 'absolute', top: '10%', fontSize: 42, left: '50%', transform: 'translate(-50%,-50%)', zIndex: 20
-            }}>
-            {data.title}
-          </h2>
-
-          <div style={{ position: 'relative', marginBottom: 40 }}>
-            <img
-              src={data.image}
-              alt={data.title}
-              style={{
-                width: '100%',
-                height: 520,
-                objectFit: 'cover',
-                borderRadius: 18,
-                display: 'block'
-              }}
-            />
-          </div>
-
-          <div
-            style={{
-              maxWidth: 1100,
-              margin: '0 auto',
-              padding: '10px 10px',
-              // background: 'rgba(224, 219, 219, 0.16)',
-              backdropFilter: 'blur(6px)',
-              borderRadius: 16
-            }}
-          >
-            {data.topics.map((t, i) => (
-              <p
-                key={i}
-                style={{
-                  marginBottom: 22,
-                  fontSize: 17,
-                  lineHeight: 1.85,
-                  color: '#f7f4f4ff'
-                }}
-              >
-                {t}
-              </p>
-            ))}
-          </div>
-        </div>
-      )}
-
-    </section>
-  );
-}
 
