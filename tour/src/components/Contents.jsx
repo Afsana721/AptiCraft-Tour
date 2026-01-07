@@ -2,19 +2,23 @@
 
 import { useEffect, useState } from "react";
 
-// Contents owns UI + data, renders ONLY the matched UI set
+// Loads data from server after page signals intent
+// Page controls *when* this component becomes active
 
-export default function Contents() {
+export default function Contents({ active }) {
   const [payload, setPayload] = useState(null);
 
   useEffect(() => {
+    if (!active) return;
+
     const controller = new AbortController();
 
     async function loadContent() {
       try {
-        const res = await fetch("/api", { signal: controller.signal });
+        const res = await fetch("/tour/api", { signal: controller.signal });
+        if (!res.ok) throw new Error(`API ${res.status}`);
         const data = await res.json();
-        setPayload(data); // only one dataset enters state
+        setPayload(data);
       } catch (err) {
         if (err.name !== "AbortError") console.error(err);
       }
@@ -22,11 +26,11 @@ export default function Contents() {
 
     loadContent();
     return () => controller.abort();
-  }, []);
+  }, [active]);
 
   if (!payload) return null;
 
-  // ---- intent-based UI routing (only ONE mounts) ----
+  // Render one UI based on server response
   if (payload.type === "approach") return <ApproachUI data={payload.data} />;
   if (payload.type === "examples") return <ExamplesUI data={payload.data} />;
   if (payload.type === "requirements") return <RequirementsUI data={payload.data} />;
@@ -34,7 +38,7 @@ export default function Contents() {
   return null;
 }
 
-// -------- UI blocks (separate layouts, same container) --------
+// -------- UI blocks (separate layouts) --------
 function ApproachUI({ data }) {
   return (
     <section className="max-w-5xl mx-auto px-6 py-20 space-y-16 text-neutral-200">

@@ -1,3 +1,5 @@
+export const runtime = "nodejs";
+
 // SERVER ROUTE – reads approach.json and exposes it as an API
 // Purpose: provide structured content for Contents.jsx (single source of truth)
 

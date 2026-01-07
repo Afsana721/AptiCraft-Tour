@@ -2,25 +2,24 @@
 
 import React from "react";
 import Contents from "../components/Contents";
-// FIX: Removed 'next/link' import to prevent compilation errors in this environment
-// import Link from "next/link"; 
+ 
 
 export default function Home() {
+    const [active, setActive] = React.useState(false);
+
   // Lazy intent observer
-// Purpose: register DOM-level intent (scroll into view)
-// No data is loaded here — this only flips a DOM signal
-React.useEffect(() => {
+  // Registers DOM-level intent (scroll into view)
+  React.useEffect(() => {
     const el = document.getElementById('content-mount');
     if (!el) return;
-    // IntersectionObserver watches ONLY the mount point
-// When user reaches this section, intent is detected
-const observer = new IntersectionObserver(([entry]) => {
+
+    const observer = new IntersectionObserver(([entry]) => {
       if (entry.isIntersecting) {
-        // Mark intent on DOM (React can react to this signal)
-el.dataset.active = 'true';
+        setActive(true);
         observer.disconnect();
       }
     }, { threshold: 0.1 });
+
     observer.observe(el);
     return () => observer.disconnect();
   }, []);
@@ -179,13 +178,14 @@ el.dataset.active = 'true';
       </section>
 
       {/* ===== Lazy-loaded Section AFTER video ===== */}
-      {/* ===== Lazy-loaded Section AFTER video ===== */}
-            {/* ===== Content Mount Point (EMPTY by default) ===== */}
-            {/* Content mount point
-    - Empty on first paint (light HTML)
-    - UI + data load ONLY after intent is detected */}
-<div id="content-mount" style={{ marginTop: '130vh', position: 'relative', zIndex: 5 }}>
-        <Contents />
+      {/* Content mount point
+          - Empty on first paint
+          - Contents mounts only after intent */}
+      <div
+        id="content-mount"
+        style={{ marginTop: '130vh', position: 'relative', zIndex: 5 }}
+      >
+        {active && <Contents active={active} />}
       </div>
     </div>
   );
