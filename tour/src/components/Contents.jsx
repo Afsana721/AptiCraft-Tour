@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 
 export default function Contents({ active }) {
   const [payload, setPayload] = useState(null);
+  const [error, setError] = useState(null); // State to hold any API error
 
   useEffect(() => {
     if (!active) return;
@@ -14,13 +15,39 @@ export default function Contents({ active }) {
     const controller = new AbortController();
 
     async function loadContent() {
+      setError(null); // Clear previous errors
       try {
-        const res = await fetch("/tour/api", { signal: controller.signal });
-        if (!res.ok) throw new Error(`API ${res.status}`);
+        console.log("[Contents] active=", active);
+        console.log("[Contents] fetching /api");
+        
+        // Call Next.js App Router API (src/app/api/route.js)
+        const res = await fetch("/api", { signal: controller.signal, cache: "no-store" });
+
+        // CRITICAL FIX: Check res.ok BEFORE trying to parse JSON.
+        if (!res.ok) {
+          const errorText = await res.text();
+          console.error(`[Contents] API fetch failed: Status ${res.status}`, errorText);
+          
+          // Attempt to parse the structured error from route.js
+          try {
+            const errorData = JSON.parse(errorText);
+            setError(errorData.error || `Failed to load data (Status: ${res.status})`);
+          } catch (e) {
+            setError(`Failed to load data (Status: ${res.status}). Server returned unparsable error.`);
+          }
+          return; // Stop execution if API failed
+        }
+        
         const data = await res.json();
+        console.log("[Contents] API response:", data);
         setPayload(data);
+        console.log("[Contents] payload set");
+        
       } catch (err) {
-        if (err.name !== "AbortError") console.error(err);
+        if (err.name !== "AbortError") {
+          console.error("[Contents] Network or JSON parsing error:", err);
+          setError("A network or data formatting error occurred.");
+        }
       }
     }
 
@@ -28,20 +55,37 @@ export default function Contents({ active }) {
     return () => controller.abort();
   }, [active]);
 
-  if (!payload) return null;
+  // Display error message if the API call failed
+  if (error) {
+    return (
+      <div className="max-w-5xl mx-auto px-6 py-20 text-center text-red-500 bg-neutral-900 rounded-xl m-10">
+        <h2 className="text-2xl font-bold mb-4">Data Loading Error</h2>
+        <p className="text-lg">{error}</p>
+        <p className="text-sm mt-2 text-red-300">
+          *If this is a "not found" error, ensure 'approach.json' is in your top-level 'public' directory.*
+        </p>
+      </div>
+    );
+  }
+
+  if (!payload) return null; // Still loading or active=false
 
   // Render one UI based on server response
   if (payload.type === "approach") return <ApproachUI data={payload.data} />;
   if (payload.type === "examples") return <ExamplesUI data={payload.data} />;
   if (payload.type === "requirements") return <RequirementsUI data={payload.data} />;
 
-  return null;
+  return (
+    <div className="max-w-5xl mx-auto px-6 py-20 text-center text-yellow-500">
+      <p>Error: Unknown payload type received from API.</p>
+    </div>
+  );
 }
 
 // -------- UI blocks (separate layouts) --------
 function ApproachUI({ data }) {
   return (
-    <section className="max-w-5xl mx-auto px-6 py-20 space-y-16 text-neutral-200">
+    <section className="max-w-5xl mx-auto px-6 py-20 space-y-16 text-neutral-200 bg-neutral-900 rounded-xl m-10 shadow-2xl">
       {/* Title */}
       <header className="space-y-4">
         <h2 className="text-4xl font-bold tracking-tight text-white">{data.title}</h2>
@@ -52,18 +96,17 @@ function ApproachUI({ data }) {
       {(data.media?.heroImage || data.media?.video) && (
         <div className="space-y-6">
           {data.media?.heroImage && (
+            // Using placeholder image URL since external images are not guaranteed
             <img
-              src={data.media.heroImage}
-              alt="approach visual"
+              src={`https://placehold.co/900x450/333333/ffffff?text=Image+Placeholder:+${encodeURIComponent(data.title)}`}
+              alt="approach visual placeholder"
               className="w-full rounded-xl border border-neutral-800"
             />
           )}
           {data.media?.video && (
-            <video
-              src={data.media.video}
-              controls
-              className="w-full rounded-xl border border-neutral-800"
-            />
+            <div className="bg-neutral-800 p-8 rounded-xl text-center">
+                <p>Video Placeholder: {data.media.video}</p>
+            </div>
           )}
         </div>
       )}
@@ -76,21 +119,16 @@ function ApproachUI({ data }) {
 
       {/* Software categories */}
       {data.softwareCategories && (
-        <div className="grid gap-10">
+        <div className="grid gap-10 md:grid-cols-2">
           {Object.entries(data.softwareCategories).map(([key, item]) => (
-            <div key={key} className="space-y-3 border-l border-neutral-800 pl-6">
-              <h3 className="text-xl font-semibold text-white capitalize">
+            <div key={key} className="space-y-3 border-l-4 border-amber-600 pl-6 bg-neutral-800/50 p-4 rounded-lg">
+              <h3 className="text-xl font-semibold text-amber-500 capitalize">
                 {key.replace(/([A-Z])/g, " $1")}
               </h3>
-              <p className="leading-relaxed">{item.description}</p>
-              {item.components && (
+              <p className="leading-relaxed text-neutral-300">{item.description}</p>
+              {(item.components || item.tools) && (
                 <ul className="list-disc ml-5 space-y-1 text-neutral-400">
-                  {item.components.map((c, i) => <li key={i}>{c}</li>)}
-                </ul>
-              )}
-              {item.tools && (
-                <ul className="list-disc ml-5 space-y-1 text-neutral-400">
-                  {item.tools.map((t, i) => <li key={i}>{t}</li>)}
+                  {(item.components || item.tools || []).map((c, i) => <li key={i}>{c}</li>)}
                 </ul>
               )}
             </div>
@@ -100,9 +138,9 @@ function ApproachUI({ data }) {
 
       {/* Roles */}
       {data.rolesInDevelopment && (
-        <div className="max-w-3xl space-y-3 pt-6 border-t border-neutral-800">
+        <div className="max-w-3xl space-y-3 pt-6 border-t border-neutral-700">
           <h3 className="text-xl font-semibold text-white">Roles in Development</h3>
-          <p className="leading-relaxed">{data.rolesInDevelopment.description}</p>
+          <p className="leading-relaxed text-neutral-300">{data.rolesInDevelopment.description}</p>
           <p className="text-sm text-neutral-400">{data.rolesInDevelopment.note}</p>
         </div>
       )}
@@ -112,16 +150,18 @@ function ApproachUI({ data }) {
 
 function ExamplesUI({ data }) {
   return (
-    <section>
-      <h2>{data.title}</h2>
+    <section className="max-w-5xl mx-auto px-6 py-20 bg-neutral-900 rounded-xl m-10">
+      <h2 className="text-4xl text-white font-bold">{data.title}</h2>
+      <p className="text-neutral-300 mt-4">Example content goes here.</p>
     </section>
   );
 }
 
 function RequirementsUI({ data }) {
   return (
-    <section>
-      <h2>{data.title}</h2>
+    <section className="max-w-5xl mx-auto px-6 py-20 bg-neutral-900 rounded-xl m-10">
+      <h2 className="text-4xl text-white font-bold">{data.title}</h2>
+      <p className="text-neutral-300 mt-4">Requirements content goes here.</p>
     </section>
   );
 }
