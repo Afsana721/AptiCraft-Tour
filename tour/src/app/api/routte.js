@@ -1,20 +1,46 @@
-import { NextResponse } from 'next/server';
-// FIX: Switched to the absolute path alias (@/public) which is standard in Next.js 
-// for module imports, resolving path dependency issues common with relative paths.
-import staticData from '@/public/approach.json'; 
+import { NextResponse } from "next/server";
 
-export async function GET() {
-  console.log("[API] /api GET hit (using direct JSON import with absolute path)");
+// This file is now located at app/api/route.js, handling requests to /api
+export async function GET(request) { 
+  console.log("SERVER: API Route /api hit successfully.");
   
-  // Verify the data was loaded correctly upon import
-  if (!staticData || typeof staticData !== 'object' || Array.isArray(staticData)) {
-    console.error("[API] Data failed to load via import. Check public/approach.json existence and validity.");
-    return NextResponse.json(
-      { error: "approach.json file failed to load. Please ensure it exists, is valid JSON, and not an array. Check next.config.js for path aliases if needed." },
-      { status: 500 }
-    );
-  }
+  // Read a query parameter from the URL to demonstrate handling the request object
+  const { searchParams } = new URL(request.url);
+  const requestedSection = searchParams.get('section') || 'DefaultSection';
   
-  // Send the pre-parsed static data to the client
-  return NextResponse.json(staticData);
+  console.log(`SERVER: Client requested section: ${requestedSection}`);
+
+  // The response now confirms which parameter the server received
+  return NextResponse.json({
+    type: "approach",
+    data: {
+      title: "Our Approach",
+
+      media: {
+        heroImage: true,
+        video: null
+      },
+
+      overview: {
+        description: "We follow a structured, user-first software development approach focused on clarity, performance, and maintainability.",
+        technicalContext: `This object was dynamically requested for section '${requestedSection}'. The server successfully read the client's query parameter.`
+      },
+
+      softwareCategories: {
+        frontend: {
+          description: "User interfaces, accessibility, and client-side rendering.",
+          tools: ["React", "Next.js", "Tailwind CSS"]
+        },
+        backend: {
+          description: "Server logic, APIs, and data orchestration.",
+          tools: ["Node.js", "Python", "PostgreSQL"]
+        }
+      },
+
+      rolesInDevelopment: {
+        description: "Planning, implementation, testing, and deployment handled collaboratively.",
+        note: "Roles may overlap depending on project scope."
+      }
+    }
+  });
 }

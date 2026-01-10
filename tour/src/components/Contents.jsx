@@ -14,44 +14,20 @@ export default function Contents({ active }) {
 
     const controller = new AbortController();
 
+    // Load data ONLY from server (route.js)
     async function loadContent() {
-      setError(null); // Clear previous errors
       try {
-        console.log("[Contents] active=", active);
-        console.log("[Contents] fetching /api");
-        
-        // Call Next.js App Router API (src/app/api/route.js)
         const res = await fetch("/api", { signal: controller.signal, cache: "no-store" });
-
-        // CRITICAL FIX: Check res.ok BEFORE trying to parse JSON.
-        if (!res.ok) {
-          const errorText = await res.text();
-          console.error(`[Contents] API fetch failed: Status ${res.status}`, errorText);
-          
-          // Attempt to parse the structured error from route.js
-          try {
-            const errorData = JSON.parse(errorText);
-            setError(errorData.error || `Failed to load data (Status: ${res.status})`);
-          } catch (e) {
-            setError(`Failed to load data (Status: ${res.status}). Server returned unparsable error.`);
-          }
-          return; // Stop execution if API failed
-        }
-        
+        if (!res.ok) throw new Error(`API error ${res.status}`);
         const data = await res.json();
-        console.log("[Contents] API response:", data);
         setPayload(data);
-        console.log("[Contents] payload set");
-        
-      } catch (err) {
-        if (err.name !== "AbortError") {
-          console.error("[Contents] Network or JSON parsing error:", err);
-          setError("A network or data formatting error occurred.");
-        }
+      } catch (e) {
+        setError(e.message);
       }
     }
 
     loadContent();
+
     return () => controller.abort();
   }, [active]);
 
