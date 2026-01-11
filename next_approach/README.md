@@ -37,4 +37,15 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/bui
 
 
 ### nex_aapproach ###
-use sample page layout : https://www.awwwards.com/sites/black-tide-island-interactive
+***use sample page layout *** 
+https://www.awwwards.com/sites/black-tide-island-interactive 
+            &
+### sample of layout *** 
+https://www.vev.design/get-a-demo/
+
+*** apps design model - History of South Asia *** 
+https://mittalsouthasiainstitute.harvard.edu/2021/06/a-timeline-of-south-asian-history-dynasties-rulers-and-key-events/ 
+
+*** CSS color site *** 
+https://www.eggradients.com/shades-of-black-color 
+https://www.eggradients.com/shades-of-color
