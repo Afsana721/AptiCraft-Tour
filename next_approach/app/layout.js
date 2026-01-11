@@ -1,3 +1,4 @@
+import "./globals.css";
 import { Geist, Geist_Mono } from "next/font/google";
 
 // Fonts already handled by Next.js font loader
@@ -30,7 +31,8 @@ export default function RootLayout({ children }) {
           defer
         ></script>
       </head>
-      <body className={`${geistSans.variable} ${geistMono.variable} bg-[#060606] text-white min-h-screen`}>
+     <body className={`${geistSans.variable} ${geistMono.variable} bg-[#060606] text-white min-h-screen`}>
+
         {children}
       </body>
     </html>
