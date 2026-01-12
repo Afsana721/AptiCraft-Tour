@@ -49,3 +49,4 @@ https://mittalsouthasiainstitute.harvard.edu/2021/06/a-timeline-of-south-asian-h
 *** CSS color site *** 
 https://www.eggradients.com/shades-of-black-color 
 https://www.eggradients.com/shades-of-color
+https://coolors.co/colors/black

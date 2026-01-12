@@ -1,0 +1,32 @@
+export async function GET(request) {
+  // Define a more comprehensive list of server data slides
+  const slides = [
+    { id: 1, text: "Dynasty of South Asia (Harappan Civilization to Maurya Empire)" },
+    { id: 2, text: "Maurya & Gupta Era (Golden Age of India)" },
+    { id: 3, text: "Mughal Civilization (A period of great art, architecture, and administration)" },
+    { id: 4, text: "Colonial Period (The rise of the British East India Company and the British Raj)" },
+    { id: 5, text: "Independence and Partition (The key events leading to modern South Asia)" },
+  ];
+
+  try {
+    // Safely extract the 'i' query parameter (index)
+    const url = new URL(request.url);
+    const index = Number(url.searchParams.get('i')) || 0;
+
+    // Retrieve the corresponding slide data
+    const slideData = slides[index % slides.length];
+
+    // Return the data as a standard Next.js Response object with JSON header
+    return new Response(JSON.stringify(slideData), {
+      status: 200,
+      headers: { 'Content-Type': 'application/json' },
+    });
+  } catch (error) {
+    // Catch any unexpected error during URL or parameter parsing
+    console.error("Error in API GET handler:", error);
+    return new Response(JSON.stringify({ error: "Internal Server Error during data processing." }), {
+      status: 500,
+      headers: { 'Content-Type': 'application/json' },
+    });
+  }
+}

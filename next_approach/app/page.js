@@ -38,6 +38,31 @@ export default function Home() {
           <span className="rounded-full border-[2px] border-[#FCF75E]/40  px-[4px] py-[4x] hover:border-[#FFFFE0]/80 ">Culture</span>
           <span className="rounded-full border-[2px] border-[#FCF75E]/40  px-[4px] py-[4x] ">Timeline</span>
         </div>
+        
+
+        
+        {/* BOOK SECTION (PLACED UNDER CARD, NOT SIDE) */}
+        <section className="mt-[40px] w-[1200px] px-[10px]">
+          {/* INITIAL BOOK-LAYOUT SECTION (STATIC, EMPTY DATA) */}
+          <div className="flex flex-col md:flex-row gap-8 h-[800px] mt-[20px] rounded-2xl border border-[#343434]/50 bg-[#0B0B0B] p-8 backdrop-blur-md">
+            
+            {/* LEFT : IMAGE PLACEHOLDER */}
+            <div className="flex-1 min-h-[260px] rounded-xl border border-[#CFB53B]/30 bg-[#060606] flex items-center justify-center text-[#555D50]">
+              Image Area
+            </div>
+
+            {/* RIGHT : INFO PLACEHOLDER */}
+            <div className="flex-1 text-left">
+              <h3 className="text-[28px] font-serif text-[#F3E4C6] mb-3"
+                style={{ textShadow: "0 0 4px rgba(212,175,55,0.25)" }}>
+                Title Placeholder
+              </h3>
+              <p className="text-[18px] text-[#E8D7B8] leading-relaxed">
+                Description text will come here from the server. This box will later animate like a page turn on scroll or click.
+              </p>
+            </div>
+          </div>
+        </section>
       </div>
     </div>
 
