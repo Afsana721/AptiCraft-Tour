@@ -3,9 +3,9 @@ import Image from "next/image";
 export default function Home() {
   return (
 <div className="flex min-h-screen items-start justify-center bg-[#060606] font-sans text-white">
-  <div className="mt-20 max-w-6xl rounded-2xl  p-10 
-  text-center backdrop-blur-md shadow-2xl" style={{ marginTop: '200px' }}>
-    <h1 className="text-5xl font-extrabold tracking-tight text-white">
+  <div className="mt-[200px] max-w-6xl rounded-2xl  p-10 
+  text-center backdrop-blur-md shadow-2xl" >
+    <h1 className="text-5xl font-extrabold tracking-tight text-[#1B1B1B]">
       Welcome to AptiCraft Tour
     </h1>
     <p className="mt-20 text-lg text-gray-300 leading-relaxed" >
